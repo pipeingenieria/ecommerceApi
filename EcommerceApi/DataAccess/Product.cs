@@ -36,7 +36,7 @@ namespace eCommerce.DataAcces
             {
                 // obteniendo la referencia de la tabla
                 CloudTable table = Table.GetTable(_table);
-                ITableEntity Product = Table.GetProductBody<ProductsEntity>(req);
+                ITableEntity Product = Table.GetTableBody<ProductsEntity>(req);
 
                 // Consulta sincrona desactivada
                 //List<ProductsEntity> _Product = table.CreateQuery<ProductsEntity>().Where(x => x.PartitionKey == _partitionKey).ToList();
@@ -90,7 +90,7 @@ namespace eCommerce.DataAcces
             {
                 log.Info("Getting Product...");
                 CloudTable table = Table.GetTable(_table);
-                ITableEntity Product = Table.GetProductBody<ProductsEntity>(req);
+                ITableEntity Product = Table.GetTableBody<ProductsEntity>(req);
                 //ProductsEntity _Product = table.CreateQuery<ProductsEntity>().Where(x => x.PartitionKey == "Product" && x.RowKey == RowKey).FirstOrDefault();
 
                 TableOperation insertOrMergeOperation = TableOperation.Retrieve(_partitionKey, RowKey);
@@ -132,8 +132,8 @@ namespace eCommerce.DataAcces
                 log.Info("Creating Product...");
 
                 CloudTable table = Table.GetTable(_table);
-                ITableEntity Product = Table.GetProductBody<ProductsEntity>(req);
-                await CrudService.InsertOrMergeEntityAsync(table, Product, log);
+                ITableEntity Product = Table.GetTableBody<ProductsEntity>(req);
+                await CrudService.InsertOrMergeEntityAsync<ProductsEntity>(table, Product, log);
 
                 // Envio a Aplication Insigths
                 TelemetryClient telemetry = new TelemetryClient();
@@ -167,7 +167,7 @@ namespace eCommerce.DataAcces
                 log.Info("Getting Product...");
                 CloudTable table = Table.GetTable(_table);
 
-                ITableEntity Product = Table.GetProductBody<ProductsEntity>(req);
+                ITableEntity Product = Table.GetTableBody<ProductsEntity>(req);
                 var query = new TableQuery<ProductsEntity>().Where(TableQuery.CombineFilters(
                                                             TableQuery.GenerateFilterCondition(nameof(TableEntity.PartitionKey), QueryComparisons.Equal, _partitionKey),
                                                             TableOperators.And,

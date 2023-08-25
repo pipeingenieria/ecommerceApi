@@ -12,7 +12,7 @@ namespace eCommerce.Shared
 {
     class CrudService
     {
-        public static async Task<ProductsEntity> InsertOrMergeEntityAsync(CloudTable table, ITableEntity entity, TraceWriter log)
+        public static async Task<T> InsertOrMergeEntityAsync<T>(CloudTable table, ITableEntity entity, TraceWriter log)
         {
             if (entity == null)
             {
@@ -25,7 +25,7 @@ namespace eCommerce.Shared
 
                 // Execute the operation.
                 TableResult result = await table.ExecuteAsync(insertOrMergeOperation);
-                ProductsEntity insertedCustomer = result.Result as ProductsEntity;
+                T insertedCustomer = (T)result.Result;
 
                 return insertedCustomer;
             }

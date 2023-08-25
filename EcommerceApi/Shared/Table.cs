@@ -18,7 +18,7 @@ namespace eCommerce.Shared
             return client.GetTableReference(tableName);
         }
 
-        public static T GetProductBody<T>(HttpRequestMessage req)
+        public static T GetTableBody<T>(HttpRequestMessage req)
         {
             var content = req.Content;
             string contentString = content.ReadAsStringAsync().Result;
